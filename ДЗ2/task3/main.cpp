@@ -37,8 +37,45 @@ public:
 
         *curr_node = new Node(data);
     }
-    bool remove(const T& data) = delete;
-    bool has(const T& data) = delete;
+    bool remove(const T& data) {
+        auto* curr_node = &root;
+
+        while (*curr_node != nullptr) {
+            curr_node = data < (*curr_node)->data ? &((*curr_node)->left) : &((*curr_node)->right);
+        }
+
+        if (*curr_node) {
+            if ((*curr_node)->right && (*curr_node)->left) {
+                Node** min = &(*curr_node)->right;
+                while ((*min)->left) {
+                    min = &(*min)->left;
+                }
+
+                Node* new_node = *min;
+                *min = (*min)->right;
+                new_node->right = (*curr_node)->right;
+                new_node->left = (*curr_node)->left;
+                delete *curr_node;
+                *curr_node = new_node;
+            } else {
+                auto new_node = (*curr_node)->left ? (*curr_node)->left : (*curr_node)->right;
+                delete *curr_node;
+                *curr_node = new_node;
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+    bool has(const T& data) {
+        auto curr_node = root;
+        while (curr_node != nullptr && curr_node->data != data) {
+            curr_node = data < curr_node->data ? curr_node->left : curr_node->right;
+        }
+
+        return curr_node;
+    }
 
     size_t get_widest_layer_count() {
         using Layer_pair = std::pair<Node*, size_t>;
@@ -147,8 +184,28 @@ class DecartTree {
         }
     }
 
-    bool remove(const T& data) = delete;
-    bool has(const T& data) = delete;
+    bool remove(const T& data) {
+        auto curr_node = &root;
+        while (*curr_node != nullptr && (*curr_node)->data != data) {
+            curr_node = data < (*curr_node)->data ? &(*curr_node)->left : &(*curr_node)->right;
+        }
+
+        if (!*curr_node) {
+            return false;
+        }
+
+        auto new_node = merge((*curr_node)->left, (*curr_node)->right);
+        delete *curr_node;
+        *curr_node = new_node;
+    }
+    bool has(const T& data) {
+        auto curr_node = root;
+        while (curr_node != nullptr && curr_node->data != data) {
+            curr_node = data < curr_node->data ? curr_node->left : curr_node->right;
+        }
+
+        return curr_node;
+    }
 
     size_t get_widest_layer_count() {
         using Layer_pair = std::pair<Node*, size_t>;
