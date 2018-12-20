@@ -5,7 +5,7 @@
 
 template <class T>
 class Hash {
-  public:
+public:
     size_t operator()(const T& data, size_t size) const {
         size_t hash = 0;
         modf(size * modf(data * (sqrt(5) - 1) / 2), hash);
@@ -26,8 +26,8 @@ size_t Hash<std::string>::operator()(const std::string& data, size_t size) const
 
 template <class T, class Hasher = Hash<T>>
 class Set {
-  public:
-    Set() = default;
+public:
+    Set(const T& del, const T& emp) : del(del), emp(emp) {}
     Set(const Set<T> &table) = delete;
     Set(Set<T> &&table) = delete;
 
@@ -39,8 +39,8 @@ class Set {
         for(size_t i = 0; i < table.size(); i++) {
             index = (index + i + 1) % table.size();
 
-            if (table[index] == "EMPTY" || table[index] == "DELETED") {
-                if (table[index] == "DELETED") {
+            if (table[index] == emp || table[index] == del) {
+                if (table[index] == del) {
                     continue;
                 } else {
                     break;
@@ -65,11 +65,11 @@ class Set {
         for (size_t i = 0; i < table.size(); i++) {
             index = (index + i + 1) % table.size();
 
-            if (!(table[index] == "EMPTY" || table[index] == "DELETED")) {
+            if (!(table[index] == emp || table[index] == del)) {
                 if (table[index] == data) {
                     return false;
                 }
-            } else if (table[index] == "DELETED" && first_del == -1) {
+            } else if (table[index] == del && first_del == -1) {
                 first_del = index;
             } else {
                 table[index] = data;
@@ -92,14 +92,14 @@ class Set {
         for(size_t i = 0; i < table.size(); i++) {
             index = (index + i + 1) % table.size();
 
-            if (table[index] == "EMPTY" || table[index] == "DELETED") {
-                if (table[index] == "DELETED") {
+            if (table[index] == emp || table[index] == del) {
+                if (table[index] == del) {
                     continue;
                 } else {
                     break;
                 }
             } else if (table[index] == data){
-                table[index] = "DELETED";
+                table[index] = del;
                 size--;
                 return true;
             }
@@ -108,14 +108,14 @@ class Set {
         return false;
     }
 
-  private:
+private:
     void grow_table()  {
         auto temp_table = table;
         auto size = static_cast<size_t>(temp_table.size() * grow_factor);
-        table = std::vector<T>(size, (T)"EMPTY");
+        table = std::vector<T>(size, emp);
 
         for (const auto &item : temp_table) {
-            if (!(item == "EMPTY" || item == "DELETED")) {
+            if (!(item == emp || item == del)) {
                 this->add(item);
             }
         }
@@ -127,7 +127,10 @@ class Set {
     const float max_alpha = 0.75;
     size_t size = 0;
 
-    std::vector<T> table = std::vector<T>(4, (T)"EMPTY");
+    T emp;
+    T del;
+
+    std::vector<T> table = std::vector<T>(4, emp);
     /*
      * В этой таблице не храним цепочки, па при вставке пробируем
      * Нужны два значения: DEL и EMP:
@@ -139,7 +142,7 @@ class Set {
 };
 
 int main() {
-    Set<std::string> set;
+    Set<std::string> set("EMPTY", "DELETED");
     char operation = 0;
     std::string data;
     while (std::cin >> operation >> data) {
