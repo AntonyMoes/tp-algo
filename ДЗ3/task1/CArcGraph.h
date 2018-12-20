@@ -9,7 +9,7 @@
 #include <cstddef>
 #include "IGraph.h"
 
-class CArcGraph : IGraph{
+class CArcGraph : public IGraph{
 public:
     explicit CArcGraph(IGraph* graph);
     explicit CArcGraph(size_t size);
