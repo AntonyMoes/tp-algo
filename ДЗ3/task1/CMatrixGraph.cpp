@@ -3,37 +3,22 @@
 //
 
 #include <set>
+#include <cassert>
 #include "CMatrixGraph.h"
 
 void CMatrixGraph::AddEdge(int from, int to) {
-    if (edges.size() <= from) {
-        edges.resize(from + 1);
-    }
-
-    if (edges[from].size() <= to) {
-        edges[from].resize(to + 1);
-    }
-
+    assert(from >= 0 && from < size);
+    assert(to >= 0 && to < size);
 
     edges[from][to]++;
 }
 
 int CMatrixGraph::VerticesCount() const {
-    std::set<int> vertices;
-
-    for (int i = 0; i < edges.size(); ++i) {
-        for (int j = 0; j < edges[i].size(); ++j) {
-            if (edges[i][j] != 0) {
-                vertices.insert(i);
-                vertices.insert(j);
-            }
-        }
-    }
-
-    return vertices.size();
+    return size;
 }
 
 std::vector<int> CMatrixGraph::GetNextVertices(int vertex) const {
+    assert(vertex >= 0 && vertex < size);
     std::vector<int> next_vertices;
 
     for (int i = 0; i < edges[vertex].size(); i++) {
@@ -46,6 +31,7 @@ std::vector<int> CMatrixGraph::GetNextVertices(int vertex) const {
 }
 
 std::vector<int> CMatrixGraph::GetPrevVertices(int vertex) const {
+    assert(vertex >= 0 && vertex < size);
     std::vector<int> prev_vertices;
 
     for (int i = 0; i < edges.size(); i++) {

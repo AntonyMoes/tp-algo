@@ -8,6 +8,12 @@
 
 class CListGraph : public IGraph {
   public:
+    explicit CListGraph(size_t size) : size(size) {
+        for (size_t i = 0; i < size; ++i) {
+            edges.emplace(i, std::list<int>());
+        }
+    }
+
     void AddEdge(int from, int to) override;
 
     int VerticesCount() const override;
@@ -17,6 +23,7 @@ class CListGraph : public IGraph {
 
   private:
     std::map<int, std::list<int>> edges;
+    size_t size;
 };
 
 

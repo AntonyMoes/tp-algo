@@ -3,10 +3,18 @@
 
 
 #include <vector>
+#include <cstddef>
 #include "IGraph.h"
 
 class CMatrixGraph : public IGraph {
 public:
+    explicit CMatrixGraph(size_t size) : size(size) {
+        edges.resize(size);
+        for (auto &edge : edges) {
+            edge.resize(size);
+        }
+    }
+
     void AddEdge(int from, int to) override;
 
     int VerticesCount() const override;
@@ -16,6 +24,7 @@ public:
 
 private:
     std::vector<std::vector<int>> edges;
+    size_t size;
 };
 
 
