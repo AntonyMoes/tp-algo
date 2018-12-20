@@ -8,12 +8,7 @@
 
 class CMatrixGraph : public IGraph {
 public:
-    explicit CMatrixGraph(size_t size) : size(size) {
-        edges.resize(size);
-        for (auto &edge : edges) {
-            edge.resize(size);
-        }
-    }
+    explicit CMatrixGraph(size_t size);
 
     void AddEdge(int from, int to) override;
 

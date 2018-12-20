@@ -19,8 +19,8 @@ std::vector<int> CListGraph::GetNextVertices(int vertex) const {
     std::vector<int> next_vertices;
 
 
-    for (auto next_vertex : edges.at(vertex)) {
-        if (std::find(next_vertices.begin(), next_vertices.end(), next_vertex) == next_vertices.end()) {
+    for (auto next_vertex : edges[vertex]) {
+        if (std::find(next_vertices.begin(), next_vertices.end(), next_vertex) == next_vertices.end()) {  // защита от кратных ребер
             next_vertices.push_back(next_vertex);
         }
     }
@@ -33,11 +33,15 @@ std::vector<int> CListGraph::GetPrevVertices(int vertex) const {
     assert(vertex >= 0 && vertex < size);
     std::vector<int> prev_vertices;
 
-    for (const auto &item : edges) {
-        if (std::find(item.second.begin(), item.second.end(), vertex) != item.second.end()) {
-            prev_vertices.push_back(item.first);
+    for (size_t i = 0; i < size; i++) {
+        if (std::find(edges[i].begin(), edges[i].end(), vertex) != edges[i].end()) {
+            prev_vertices.push_back(i);
         }
     }
 
     return prev_vertices;
+}
+
+CListGraph::CListGraph(size_t size) : size(size) {
+    edges.resize(size);
 }

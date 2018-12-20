@@ -42,3 +42,10 @@ std::vector<int> CMatrixGraph::GetPrevVertices(int vertex) const {
 
     return prev_vertices;
 }
+
+CMatrixGraph::CMatrixGraph(size_t size) : size(size) {
+    edges.resize(size);
+    for (auto &edge : edges) {
+        edge.resize(size);
+    }
+}
