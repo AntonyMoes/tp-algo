@@ -41,3 +41,12 @@ std::vector<int> CArcGraph::GetPrevVertices(int vertex) const {
 }
 
 CArcGraph::CArcGraph(size_t size) : size(size) {}
+
+CArcGraph::CArcGraph(IGraph *graph) : CArcGraph(graph->VerticesCount()){
+    for (size_t i = 0; i < size; ++i) {
+        auto next_vertices = graph->GetNextVertices(i);
+        for (auto vertex : next_vertices) {
+            edges.emplace_back(std::make_pair(i, vertex));
+        }
+    }
+}

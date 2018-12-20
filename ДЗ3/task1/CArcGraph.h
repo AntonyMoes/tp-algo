@@ -11,6 +11,7 @@
 
 class CArcGraph : IGraph{
 public:
+    explicit CArcGraph(IGraph* graph);
     explicit CArcGraph(size_t size);
 
     void AddEdge(int from, int to) override;
@@ -22,7 +23,7 @@ public:
 
 private:
     std::vector<std::pair<int, int>> edges;
-    size_t size;
+    const size_t size;
 
 };
 

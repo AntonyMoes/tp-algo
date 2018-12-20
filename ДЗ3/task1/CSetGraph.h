@@ -8,6 +8,7 @@
 
 class CSetGraph : public IGraph {
 public:
+    explicit CSetGraph(IGraph* graph);
     explicit CSetGraph(size_t size);
 
     void AddEdge(int from, int to) override;
@@ -19,7 +20,7 @@ public:
 
 private:
     std::vector<std::set<int>> edges;
-    size_t size;
+    const size_t size;
 
 };
 

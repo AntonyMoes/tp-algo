@@ -44,3 +44,12 @@ std::vector<int> CListGraph::GetPrevVertices(int vertex) const {
 CListGraph::CListGraph(size_t size) : size(size) {
     edges.resize(size);
 }
+
+CListGraph::CListGraph(IGraph *graph) : CListGraph(graph->VerticesCount()){
+    for (size_t i = 0; i < size; ++i) {
+        auto next_vertices = graph->GetNextVertices(i);
+        for (auto vertex : next_vertices) {
+            edges[i].push_back(vertex);
+        }
+    }
+}

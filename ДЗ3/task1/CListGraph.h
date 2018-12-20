@@ -8,6 +8,7 @@
 
 class CListGraph : public IGraph {
   public:
+    explicit CListGraph(IGraph* graph);
     explicit CListGraph(size_t size);
 
     void AddEdge(int from, int to) override;
@@ -19,7 +20,7 @@ class CListGraph : public IGraph {
 
   private:
     std::vector<std::list<int>> edges;
-    size_t size;
+    const size_t size;
 };
 
 

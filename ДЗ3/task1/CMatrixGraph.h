@@ -8,6 +8,7 @@
 
 class CMatrixGraph : public IGraph {
 public:
+    explicit CMatrixGraph(IGraph* graph);
     explicit CMatrixGraph(size_t size);
 
     void AddEdge(int from, int to) override;
@@ -19,7 +20,7 @@ public:
 
 private:
     std::vector<std::vector<int>> edges;
-    size_t size;
+    const size_t size;
 };
 
 

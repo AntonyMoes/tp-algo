@@ -39,3 +39,12 @@ std::vector<int> CSetGraph::GetPrevVertices(int vertex) const {
 CSetGraph::CSetGraph(size_t size) : size(size) {
     edges.resize(size);
 }
+
+CSetGraph::CSetGraph(IGraph *graph) : CSetGraph(graph->VerticesCount()){
+    for (size_t i = 0; i < size; ++i) {
+        auto next_vertices = graph->GetNextVertices(i);
+        for (auto vertex : next_vertices) {
+            edges[i].insert(vertex);
+        }
+    }
+}
