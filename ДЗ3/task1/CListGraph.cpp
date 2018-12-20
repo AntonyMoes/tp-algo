@@ -1,5 +1,6 @@
 #include "CListGraph.h"
 #include <algorithm>
+#include <set>
 
 void CListGraph::AddEdge(int from, int to) {
     if (edges.find(from) == edges.end()) {
@@ -7,11 +8,19 @@ void CListGraph::AddEdge(int from, int to) {
     }
 
     edges[from].push_back(to);
-    verticles_count++;
 }
 
 int CListGraph::VerticesCount() const {
-    return verticles_count;
+    std::set<int> vertices;
+
+    for (const auto& item: edges) {
+        vertices.insert(item.first);
+        for (const auto verticle: item.second) {
+            vertices.insert(verticle);
+        }
+    }
+
+    return vertices.size();
 }
 
 std::vector<int> CListGraph::GetNextVertices(int vertex) const {

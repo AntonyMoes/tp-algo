@@ -1,13 +1,12 @@
-#ifndef TASK1_CLISTGRAPH_H
-#define TASK1_CLISTGRAPH_H
+#ifndef TASK1_CMATRIXGRAPH_H
+#define TASK1_CMATRIXGRAPH_H
 
 
-#include <list>
-#include <map>
+#include <vector>
 #include "IGraph.h"
 
-class CListGraph : public IGraph {
-  public:
+class CMatrixGraph : public IGraph {
+public:
     void AddEdge(int from, int to) override;
 
     int VerticesCount() const override;
@@ -15,9 +14,9 @@ class CListGraph : public IGraph {
     std::vector<int> GetNextVertices(int vertex) const override;
     std::vector<int> GetPrevVertices(int vertex) const override;
 
-  private:
-    std::map<int, std::list<int>> edges;
+private:
+    std::vector<std::vector<int>> edges;
 };
 
 
-#endif  // TASK1_CLISTGRAPH_H
+#endif //TASK1_CMATRIXGRAPH_H
