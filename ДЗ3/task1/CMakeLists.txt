@@ -8,6 +8,6 @@ set(
 
         CListGraph.cpp
         CListGraph.h
-        IGraph.h CMatrixGraph.cpp CMatrixGraph.h CSetGraph.cpp CSetGraph.h)
+        IGraph.h CMatrixGraph.cpp CMatrixGraph.h CSetGraph.cpp CSetGraph.h CArcGraph.cpp CArcGraph.h)
 
 add_executable(task1 main.cpp ${Source})

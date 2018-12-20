@@ -1,6 +1,4 @@
 #include "CSetGraph.h"
-#include <algorithm>
-#include <set>
 #include <cassert>
 
 void CSetGraph::AddEdge(int from, int to) {

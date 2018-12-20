@@ -1,6 +1,5 @@
 #include "CListGraph.h"
 #include <algorithm>
-#include <set>
 #include <cassert>
 
 void CListGraph::AddEdge(int from, int to) {

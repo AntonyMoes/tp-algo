@@ -1,8 +1,3 @@
-//
-// Created by antonymo on 18.12.18.
-//
-
-#include <set>
 #include <cassert>
 #include "CMatrixGraph.h"
 
