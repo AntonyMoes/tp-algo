@@ -34,7 +34,7 @@ std::vector<int> CArcGraph::GetPrevVertices(int vertex) const {
 
     for (const auto& pair : edges) {
         if (pair.second == vertex && std::find(prev_vertices.begin(), prev_vertices.end(), pair.first) == prev_vertices.end()) {
-            prev_vertices.push_back(pair.second);
+            prev_vertices.push_back(pair.first);
         }
     }
     return prev_vertices;
