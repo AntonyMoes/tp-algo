@@ -3,7 +3,7 @@
 
 
 #include <cstddef>
-#include <set>
+#include <unordered_set>
 #include "IGraph.h"
 
 class CSetGraph : public IGraph {
@@ -19,7 +19,7 @@ public:
     std::vector<int> GetPrevVertices(int vertex) const override;
 
 private:
-    std::vector<std::set<int>> edges;
+    std::vector<std::unordered_set<int>> edges;
     const size_t size;
 
 };
